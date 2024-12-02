@@ -1,6 +1,16 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from typing import List, Dict
+import logging
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from src.anomaly_detection import predict_log
+from src.root_cause_analysis import analyze_root_cause
+
+
+# Logger setup
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger("fastapi")
 
 # Define the FastAPI app
 app = FastAPI()
@@ -16,3 +26,24 @@ class PredictionResponse(BaseModel):
 async def predict(request: LogRequest):
     prediction = predict_log(request.log)
     return PredictionResponse(prediction=prediction)
+
+class LogsRequest(BaseModel):
+    logs: List[str]
+
+class RCAResponse(BaseModel):
+    anomalies: List[int]
+    root_causes: Dict[int, str]
+
+@app.post("/root_cause_analysis", response_model=RCAResponse)
+async def root_cause_analysis(request: LogsRequest):
+    print("Received logs:", request.logs)
+    # Step 1: Predict anomalies for each log
+    anomalies = [predict_log(log) for log in request.logs]
+    # Step 2: Perform root cause analysis
+    root_causes = analyze_root_cause(request.logs, anomalies)
+    return RCAResponse(anomalies=anomalies, root_causes=root_causes)
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    logger.error(f"Validation Error: {exc}")
+    return JSONResponse(status_code=422, content={"message": str(exc)})

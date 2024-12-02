@@ -47,6 +47,9 @@ Install dependencies:
    curl -X POST "http://localhost:8000/predict" -H "Content-Type: application/json" -d '{"log": "Success"}'
    curl -X POST "http://localhost:8000/predict" -H "Content-Type: application/json" -d '{"log": "Failure"}'
 
+   curl -X POST "http://localhost:8000/root_cause_analysis" -H "Content-Type: application/json" -d '{"logs": ["openstack log with error", "app log entry", "Timeout occurred"]}'
+
+
 ```
 ## Dockerize the Application
 ### Build docker image
