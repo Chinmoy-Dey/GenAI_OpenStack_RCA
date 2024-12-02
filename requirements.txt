@@ -1,0 +1,10 @@
+torch
+transformers
+pandas
+scikit-learn
+pytest
+pydantic
+gradio
+fastapi
+uvicorn
+requests
