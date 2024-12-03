@@ -1,0 +1,4 @@
+*.pyc
+src/__pycache__/*
+.gradio/
+.pytest_cache

@@ -6,6 +6,7 @@ import requests
 API_URL = "http://localhost:8000"
 PREDICT_ENDPOINT = f"{API_URL}/predict"
 RCA_ENDPOINT = f"{API_URL}/root_cause_analysis"
+RCA_GENERATION = f"{API_URL}/root_cause_generate"
 
 def predict(log):
     # Send a POST request to the FastAPI endpoint
@@ -25,6 +26,16 @@ def root_cause_analysis(logs):
         return f"Anomalies: {anomalies}\nRoot Causes: {root_causes}"
     return "Error: Unable to connect to the RCA service."
 
+def root_cause_generation(logs):
+    logs = logs.splitlines()
+    response = requests.post(RCA_GENERATION, json={"logs": logs})
+    if response.status_code == 200:
+        data = response.json()
+        anomalies = data["anomalies"]
+        root_causes = data["root_causes"]
+        result = "\n".join([f"Log {i}: {root_causes[str(i)]}" for i, a in enumerate(anomalies) if a == 1])
+        return result or "No anomalies detected."
+    return f"Error: {response.status_code} - {response.text}"
 
 # Define the Gradio interface
 interface = gr.TabbedInterface(
@@ -43,8 +54,15 @@ interface = gr.TabbedInterface(
             title="Root Cause Analysis",
             description="Perform RCA for logs and detected anomalies.",
         ),
+       gr.Interface(
+            fn=root_cause_generation,
+            inputs=gr.Textbox(lines=10, placeholder="Paste logs here..."),
+            outputs="text",
+            title="Issue Explainer",
+            description="Detect anomalies in logs and explain root causes."
+        ), 
     ],
-    tab_names=["Anomaly Detection", "Root Cause Analysis"]
+    tab_names=["Anomaly Detection", "Root Cause Analysis",  "Issue Explainer"]
 )
 if __name__ == "__main__":
     interface.launch()

@@ -28,6 +28,15 @@ Install dependencies:
 ```bash
    pytest tests/
 ```
+## Run locally
+```bash
+   sh run.sh
+```
+```
+   Error connecting to server.
+   Timeout occurred while processing request.
+   Operation completed successfully.
+```
 ## Test the Application
 ### Access the Gradio UI: Open your browser and navigate to 
 ```
