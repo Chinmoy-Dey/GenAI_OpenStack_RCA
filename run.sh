@@ -3,8 +3,8 @@
 # Configurable parameters
 UVICORN_HOST="0.0.0.0"
 UVICORN_PORT=8000
-UVICORN_CMD="uvicorn ui.api:app --reload --host $UVICORN_HOST --port $UVICORN_PORT"
-PYTHON_SCRIPT="python3 ui/app.py"
+UVICORN="uvicorn ui.api:app --reload --host $UVICORN_HOST --port $UVICORN_PORT"
+APP="python3 ui/app.py"
 REQUIREMENTS_FILE="requirements.txt"
 LOG_FILE="service_startup.log"
 
@@ -104,7 +104,7 @@ terminate_port $UVICORN_PORT
 
 # Start Uvicorn
 log_message "Starting Uvicorn on $UVICORN_HOST:$UVICORN_PORT..."
-$UVICORN_CMD &
+$UVICORN &
 UVICORN_PID=$!
 if [ $? -ne 0 ]; then
     log_message "Failed to start Uvicorn. Exiting."
@@ -114,7 +114,7 @@ log_message "Uvicorn started with PID $UVICORN_PID."
 
 # Start Python script
 log_message "Starting Python script..."
-$PYTHON_SCRIPT &
+$APP &
 PYTHON_PID=$!
 if [ $? -ne 0 ]; then
     log_message "Failed to start Python script. Exiting."
