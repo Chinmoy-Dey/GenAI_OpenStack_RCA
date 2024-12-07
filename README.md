@@ -63,18 +63,13 @@ Install dependencies:
 ## Dockerize the Application
 ### Build docker image
 ```
-   docker build -t anomaly-detector-app .
+   ./build_and_test_docker.sh
 ```
 ### Run docker container 
 ```
-   docker run -p 8000:8000 -p 7860:7860 anomaly-detector-app
+   docker run -p 8000:8000 -p 7860:7860 anomaly-detector-rca-app
 
 ```
-### Docker compose
-```
-   docker-compose up --build
-```
-
 ### Push the Docker Image to a Registry
 ```
    docker tag anomaly-detector-app chinmoydey/anomaly-detector-app:latest
