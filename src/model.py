@@ -1,6 +1,7 @@
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from transformers import BertTokenizer, BertForSequenceClassification
 from transformers import AutoTokenizer, AutoModel
+import torch
 
 #from src.export import g_logBert, g_tokenizer 
 import sys
@@ -10,8 +11,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent))
 
 # Import LogAnomalyDetector
-from model_architecture import LogAnomalyDetector
-
+from model_architecture.log_anomaly_detector import LogAnomalyDetector
 
 def load_model_base():
     # if g_logBert is not None and g_tokenizer is not None:
@@ -24,23 +24,13 @@ def load_model_base():
 
 
 def load_model():
-    """
-    Load the LogAnomalyDetector model and its tokenizer.
+        """Load the saved model"""
+        # Create a new instance of your model
+        model = LogAnomalyDetector(base_model='bert-base-uncased')  
+        
+        # Load the state dictionary into the model
+        model.load_state_dict(torch.load('src/model_files/LogAnomalyDetector/model.pth', map_location=torch.device('cpu'), weights_only=True ))   
+        model.eval()
+        tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
-    Returns:
-        model: The loaded LogAnomalyDetector model in evaluation mode.
-        tokenizer: The tokenizer associated with the model.
-    """
-    # Define the model architecture
-    model = LogAnomalyDetector(base_model="bert-base-uncased")  # Ensure this matches your training code
-
-    # Load the state dictionary into the model
-    model.load_state_dict(torch.load("./model_files/LogAnomalyDetector/model.pth", map_location=torch.device('cpu')))
-
-    # Set the model to evaluation mode
-    model.eval()
-
-    # Load the tokenizer
-    tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
-
-    return model, tokenizer
+        return model, tokenizer
