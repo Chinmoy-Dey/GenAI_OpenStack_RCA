@@ -56,11 +56,3 @@ def detect_anomalies1(model, tokenizer, logs):
     predictions = torch.argmax(outputs.logits, dim=-1)
     print(predictions)
     return predictions
-
-def main():
-    model, tokenizer = load_model()
-    ano = predict_log("Unknown tag: test a simple log which showsn unknown")
-    print(ano)
-
-if __name__ == "__main__":
-    main()

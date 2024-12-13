@@ -24,13 +24,18 @@ def load_model_base():
 
 
 def load_model():
-        """Load the saved model"""
-        # Create a new instance of your model
-        model = LogAnomalyDetector(base_model='bert-base-uncased')  
-        
-        # Load the state dictionary into the model
-        model.load_state_dict(torch.load('src/model_files/LogAnomalyDetector/model.pth', map_location=torch.device('cpu'), weights_only=True ))   
-        model.eval()
-        tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+    """Load the saved model"""
+    model = LogAnomalyDetector(base_model='bert-base-uncased')
 
-        return model, tokenizer
+    try:
+        state_dict = torch.load(
+            'src/model_files/LogAnomalyDetector/model.pth',
+            map_location=torch.device('cpu')
+        )
+        model.load_state_dict(state_dict)
+    except Exception as e:
+        raise RuntimeError(f"Failed to load the model: {e}")
+
+    model.eval()
+    tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+    return model, tokenizer
