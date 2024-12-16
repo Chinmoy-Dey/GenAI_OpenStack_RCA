@@ -22,6 +22,22 @@ This project provides a comprehensive solution for detecting anomalies and perfo
 - GitHub Account (for CI/CD)
 - Docker Hub Account (for image deployment)
 
+### Local Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/Chinmoy-Dey/GenAI_OpenStack_RCA.git
+cd GenAI_OpenStack_RCA
+touch file1.py
+git add file1.py
+git commit -m "Add file1.py"
+git push -f origin main
+git log # check the commit history https://github.com/Chinmoy-Dey/GenAI_OpenStack_RCA.git
+```
+### Run locally
+```bash
+   sh run.sh
+```
+
 ## Installation
 Install dependencies:
 ```bash
@@ -31,10 +47,7 @@ Install dependencies:
 ```bash
    pytest tests/
 ```
-## Run locally
-```bash
-   sh run.sh
-```
+
 ```
    Error connecting to server.
    Timeout occurred while processing request.
@@ -84,12 +97,7 @@ Install dependencies:
 ```bash
 
 ```
-### Local Setup
-1. Clone the repository:
-```bash
-git clone https://github.com/Chinmoy-Dey/GenAI_OpenStack_RCA.git
-cd GenAI_OpenStack_RCA
-```
+
 # Code structure
 ```
 ├── src/
