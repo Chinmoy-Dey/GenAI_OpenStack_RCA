@@ -65,4 +65,6 @@ interface = gr.TabbedInterface(
     tab_names=["Anomaly Detection", "Root Cause Analysis",  "Issue Explainer"]
 )
 if __name__ == "__main__":
-    interface.launch()
+    #interface.launch(share=True)
+    interface.launch(share=True)
+

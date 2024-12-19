@@ -8,3 +8,6 @@ gradio
 fastapi
 uvicorn
 requests
+jinja2 
+markupsafe 
+urllib3

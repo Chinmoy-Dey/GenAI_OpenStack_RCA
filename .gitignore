@@ -3,3 +3,5 @@ src/__pycache__/*
 .gradio/
 .pytest_cache
 service_log/
+capstone-grp1 
+.venv_state
