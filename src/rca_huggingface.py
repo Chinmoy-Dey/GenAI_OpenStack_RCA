@@ -35,7 +35,7 @@ from langchain_community.document_loaders import PyPDFLoader
 
 # Load PDF
 loaders = [
-    PyPDFLoader(".\content\context_kb.pdf")
+    PyPDFLoader("..\data\context_kb.pdf")
 
 ]
 
@@ -94,7 +94,7 @@ embedding
 
 from langchain_chroma import Chroma
 
-persist_directory = 'docs/chroma/'
+persist_directory = 'data/chroma/'
 #!rm -rf ./docs/chroma  # remove old database files if any
 
 vectordb = Chroma.from_documents(
