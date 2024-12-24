@@ -11,3 +11,11 @@ requests
 jinja2 
 markupsafe 
 urllib3
+langchain-core
+langchain-community
+sentence-transformers
+langchain-huggingface
+langchain-chroma
+chromadb
+pypdf
+
