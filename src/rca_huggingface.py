@@ -152,20 +152,20 @@ rag_chain = (retrieval                     # Retrieval
 
 response = rag_chain.invoke({"question": "What is openstack??"})
 
-print (response)
+#print (response)
 
 
 
-def ragFunction(question):
+def ragFunction_hf(question):
 
   QA_PROMPT = PromptTemplate(input_variables=["context", "question"],template=template,)
   rag_chain= {"context":RunnablePassthrough(context= lambda x:x["question"] | retriever),
          "question": lambda x:x["question"]}|QA_PROMPT | llm |StrOutputParser()
 
-  print(question)
+  #print(question)
   #response=rag_chain.invoke(question)
   #response=rag_chain.invoke({"question" :"what is a package?"})
   response=rag_chain.invoke({"question" : question})
-  print(response)
+  #print(response)
   return response
 
