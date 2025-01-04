@@ -1,4 +1,5 @@
 #!/bin/bash
+source ./setup_venv.sh
 
 # Configurable parameters
 UVICORN_HOST="0.0.0.0"
@@ -54,7 +55,7 @@ install_prerequisites() {
     if [ -f "$REQUIREMENTS_FILE" ]; then
         log_message "Installing dependencies from $REQUIREMENTS_FILE..."
         python3 -m pip install --upgrade pip
-        python3 -m pip install -r "$REQUIREMENTS_FILE"
+        python3 -m pip install --upgrade --force-reinstall -r "$REQUIREMENTS_FILE"
         if [ $? -ne 0 ]; then
             log_message "Failed to install dependencies from $REQUIREMENTS_FILE. Exiting."
             exit 1
@@ -93,14 +94,33 @@ cleanup() {
     log_message "Script is exiting. Cleaning up..."
     terminate_port $UVICORN_PORT
     log_message "Cleanup completed."
+    #deactivate
 }
+
 trap cleanup EXIT
+
+# Run the function to create and activate virtual environment
+create_and_activate_venv
+
+# Check if venv is activated
+check_venv_activated
+
+source capstone-grp1/bin/activate
+which python3
+
+
+echo 
+echo "installing packages please wait ..."
+sleep 3
 
 # Check and install prerequisites
 install_prerequisites
 
 # Check and handle port conflict for Uvicorn
 terminate_port $UVICORN_PORT
+
+echo "Bringing up services please wait ..."
+sleep 3
 
 # Start Uvicorn
 log_message "Starting Uvicorn on $UVICORN_HOST:$UVICORN_PORT..."

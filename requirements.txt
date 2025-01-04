@@ -8,3 +8,17 @@ gradio
 fastapi
 uvicorn
 requests
+jinja2 
+markupsafe 
+urllib3
+langchain-core
+langchain-community
+sentence-transformers
+langchain-huggingface
+langchain-chroma
+chromadb
+pypdf
+openai
+langchain-openai
+clearml == 1.16.5
+tensorflow == 2.18.0
