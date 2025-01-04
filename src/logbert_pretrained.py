@@ -9,6 +9,7 @@ Original file is located at
 
 import pandas as pd
 csv_file = "../data/OpenStack_2k.log_structured.csv"  # Replace with the path to your CSV file
+csv_file = "../data/OpenStack_2k.log_templates.csv"
 log_data = pd.read_csv(csv_file)
 
 
@@ -31,13 +32,13 @@ attention_masks = []
 lng=[]
 lng_text=[]
 lng_label=[]
-lng_level=[]
+#lng_level=[]
 
 for log_label in log_data["EventId"]:
     lng_label.append(log_label)
 
-for log_level in log_data["Level"]:
-    lng_level.append(log_level)
+#for log_level in log_data["Level"]:
+   # lng_level.append(log_level)
 
 
 for log_text in log_data["EventTemplate"]:
@@ -96,12 +97,18 @@ else:
 
 threshold = 0.977 # Adjust the threshold as needed
 logs_anomal=[]
-# Compare each log with the mean log centroid using cosine similarity
-for i, log_embedding in enumerate(log_embeddings):
-    if all_logs_centroid is not None:
-        similarity_score = cosine_similarity([log_embedding], [all_logs_centroid])[0][0]
-        # Compare similarity score with the threshold
-        if similarity_score < threshold:
-            print(f"Anomaly detected:  {i} : {lng_label[i]}: {lng_level[i]} Log {lng_text[i]}")
-            #print(lng[i])
-            logs_anomal.append(i)
+
+
+def adbert():
+    # Compare each log with the mean log centroid using cosine similarity
+    for i, log_embedding in enumerate(log_embeddings):
+        if all_logs_centroid is not None:
+            similarity_score = cosine_similarity([log_embedding], [all_logs_centroid])[0][0]
+            # Compare similarity score with the threshold
+            if similarity_score < threshold:
+                #print(f"Anomaly detected:  {i} : {lng_label[i]}: {lng_level[i]} Log {lng_text[i]}")
+                #print(f"Anomaly detected:  {i} : {lng_label[i]}: {lng_level[i]} Log {lng_text[i]}")
+                #print(lng[i])
+                logs_anomal.append(lng_text[i])
+                print (logs_anomal)
+    return logs_anomal
