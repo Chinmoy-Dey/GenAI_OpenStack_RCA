@@ -88,15 +88,14 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 
 # Build prompt
-template = """Use the following pieces of context to explain the openstack log. Explain what that log means and how to sovle it
+template = """Use the following pieces of context to explain the openstack log. Explain what that log means and a potential solution. There are more than one log. Identify what these logs mean
 
-  Always say "thanks for asking!" at the end of the answer.
   {context}
   Question: {question}
   Helpful Answer:"""
 
 
-def ragFunction(question):
+def ragFunction_openai(question):
 
   QA_PROMPT = PromptTemplate(input_variables=["context", "question"],template=template,)
   rag_chain= {"context":RunnablePassthrough(context= lambda x:x["question"] | retriever),
@@ -109,6 +108,6 @@ def ragFunction(question):
   print (response)
   return response
 
-log="<*> POST <*>status: <*> len: <*> time: <*>.<*>"
+#log="<*> POST <*>status: <*> len: <*> time: <*>.<*>"
 
-ragFunction(log)
+#ragFunction(log)
