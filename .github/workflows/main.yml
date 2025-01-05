@@ -19,7 +19,7 @@ jobs:
 
     - name: Log in to DockerHub debug
       run: |
-        echo "your_password" | docker login -u "aimlopscsudipto" --password-stdin
+        echo "your_password" | docker login -u "aimlopscsudipto@gmail.com" --password-stdin
 
     - name: Push Docker Image debug
       run: |
