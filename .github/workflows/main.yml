@@ -23,16 +23,16 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build Docker Image
-      run: |
-        docker build . \
-          --file Dockerfile \
-          --tag ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:latest \
-          # --tag ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
-    - name: Push Docker Image
-      run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:latest
-        # docker push ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
+    # - name: Build Docker Image
+    #   run: |
+    #     docker build . \
+    #       --file Dockerfile \
+    #       --tag ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:latest \
+    #       # --tag ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
+    # - name: Push Docker Image
+    #   run: |
+    #     docker push ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:latest
+    #     # docker push ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
         
   deploy:
     runs-on: ubuntu-latest
@@ -44,16 +44,16 @@ jobs:
     - name: Pull Docker Image
       run: docker pull ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:latest
 
-  #   - name: Deploy to AWS
-  #     env:
-  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #       AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-  #     run: |
-  #       # Stop existing container if running
-  #       docker rm -f genai-openstack-container || true
-  #       # Run new container
-  #       docker run -d \
-  #         -p 8000:8000 \
-  #         --name genai-openstack-container \
-  #         ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:latest
+    - name: Deploy to AWS
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      run: |
+        # Stop existing container if running
+        docker rm -f genai-openstack-container || true
+        # Run new container
+        docker run -d \
+          -p 8000:8000 \
+          --name genai-openstack-container \
+          ${{ secrets.DOCKER_USERNAME }}/genai_openstack_rca:latest
