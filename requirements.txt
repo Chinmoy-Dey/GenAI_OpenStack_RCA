@@ -20,5 +20,3 @@ chromadb
 pypdf
 openai
 langchain-openai
-clearml == 1.16.5
-tensorflow == 2.18.0
