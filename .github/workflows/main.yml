@@ -27,10 +27,10 @@ jobs:
         echo "dckr_pat_LqvpR0mlz4tBV3f6pvV77w01JtQ" | docker login -u "aimlopscsudipto@gmail.com" --password-stdin
         docker build . \
           --file Dockerfile \
-          --tag aimlopscsudipto/genai_openstack_rca:latest \
-          --tag aimlopscsudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
-        docker push aimlopscsudipto/genai_openstack_rca:latest
-        docker push aimlopscsudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
+          --tag aimlc3sudipto/genai_openstack_rca:latest \
+          --tag aimlc3sudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
+        docker push aimlc3sudipto/genai_openstack_rca:latest
+        docker push aimlc3sudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
 
     # - name: Push Docker Image debug
     #   run: |
