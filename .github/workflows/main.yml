@@ -17,20 +17,20 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    # - name: Log in to DockerHub
-    #   run: |
-    #     echo "dckr_pat_LqvpR0mlz4tBV3f6pvV77w01JtQ" | docker login -u "aimlopscsudipto@gmail.com" --password-stdin
-
-    - name: Enable Docker Debugging
+    - name: Log in to DockerHub
       run: |
-        export DOCKER_CLI_DEBUG=1
-        echo "dckr_pat_LqvpR0mlz4tBV3f6pvV77w01JtQ" | docker login -u "aimlopscsudipto@gmail.com" --password-stdin
-        docker build . \
-          --file Dockerfile \
-          --tag aimlc3sudipto/genai_openstack_rca:latest \
-          --tag aimlc3sudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
-        docker push aimlc3sudipto/genai_openstack_rca:latest
-        docker push aimlc3sudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
+        echo "dckr_pat_LqvpR0mlz4tBV3f6pvV77w01JtQ" | docker login -u "aimlc3sudipto" --password-stdin
+
+    # - name: Enable Docker Debugging
+    #   run: |
+    #     export DOCKER_CLI_DEBUG=1
+    #     echo "dckr_pat_LqvpR0mlz4tBV3f6pvV77w01JtQ" | docker login -u "aimlopscsudipto@gmail.com" --password-stdin
+    #     docker build . \
+    #       --file Dockerfile \
+    #       --tag aimlc3sudipto/genai_openstack_rca:latest \
+    #       --tag aimlc3sudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
+    #     docker push aimlc3sudipto/genai_openstack_rca:latest
+    #     docker push aimlc3sudipto/genai_openstack_rca:$(date +%Y%m%d%H%M%S)
 
     # - name: Push Docker Image debug
     #   run: |
