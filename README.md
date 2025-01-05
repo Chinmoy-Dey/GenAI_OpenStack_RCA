@@ -38,6 +38,25 @@ git log # check the commit history https://github.com/Chinmoy-Dey/GenAI_OpenStac
    sh run.sh
 ```
 
+   2  git clone https://github.com/Chinmoy-Dey/GenAI_OpenStack_RCA.git
+   3 ls
+   4 cd .\GenAI_OpenStack_RCA\
+   5 ls
+   6 python -m venv venv
+   7 cd venv
+   8 ls
+   9 cd Scripts
+  10 ls
+  11 .\activate
+  12 cd ../..
+  13 ls
+  14 pip install -r .\requirements.txt
+  15 ls
+  16 cd ui
+  17 ls
+  18 python app.py
+
+
 ## Installation
 Install dependencies:
 ```bash
