@@ -37,16 +37,20 @@ def detect_anomalies(model, tokenizer, logs):
     if 'token_type_ids' in inputs: 
         del inputs['token_type_ids']
     
-    # Get the model's output (anomaly score)
-    anomaly_score = model(**inputs)  # This directly returns the score as a tensor
-    
-    # Convert the score to a probability and threshold it
-    anomaly_probability = anomaly_score.item()  # Extract the scalar value
-    print(f"detect_anomalies anomaly_probability: {anomaly_probability}") 
-    
-    # Return 1 if the anomaly probability exceeds 0.5, else return 0
-    return 1 if anomaly_probability > 0.1 else 0
+# Get the model's output
+    anomaly_score = model(**inputs)  # This should now return a proper tensor
+    print(f"Model output (anomaly_score): {anomaly_score}")
 
+    # Ensure the model output is a tensor of the correct shape
+    if anomaly_score.dim() != 2 or anomaly_score.shape[1] != 1:
+        raise ValueError("Model output must be a tensor with shape (batch_size, 1).")
+
+    # Convert to probabilities
+    anomaly_probability = anomaly_score.squeeze(1).tolist()  # Convert to a list of probabilities
+    print(f"Anomaly probabilities: {anomaly_probability}")
+
+    # Return binary classification based on threshold
+    return [1 if prob > 0.1 else 0 for prob in anomaly_probability]
 
 def detect_anomalies1(model, tokenizer, logs):
     inputs = tokenizer(
