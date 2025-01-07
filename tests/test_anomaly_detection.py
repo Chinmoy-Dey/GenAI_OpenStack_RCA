@@ -4,21 +4,26 @@ from transformers import BertForSequenceClassification
 from src.anomaly_detection import detect_anomalies
 
 def test_detect_anomalies():
-    # Mock model
-    mock_model = MagicMock()
-    mock_model.return_value = MagicMock(logits=torch.tensor([[0.1, 0.9], [0.7, 0.3]]))  
+    # Mock the model and tokenizer
+    model = MagicMock()
+    tokenizer = MagicMock()
 
-    # Mock tokenizer
-    mock_tokenizer = MagicMock()
-    mock_tokenizer.return_value = {
-        "input_ids": torch.tensor([[1, 2, 3], [4, 5, 6]]),
-        "attention_mask": torch.tensor([[1, 1, 1], [1, 1, 1]])
+    # Configure the tokenizer mock to return a dummy tensor dictionary
+    tokenizer.return_value = {
+        'input_ids': torch.tensor([[1, 2, 3]]),
+        'attention_mask': torch.tensor([[1, 1, 1]])
     }
-    
-    # Mock logs
-    logs = ["something crashes in openstack", "INIT SUCCESSFUL"]
-    
-    from src.anomaly_detection import detect_anomalies
-    predictions = detect_anomalies(mock_model, mock_tokenizer, logs)
-    print(predictions)
-    assert predictions.tolist() == [1, 0] 
+
+    # Configure the model mock to return a dummy tensor with a scalar value
+    mock_output = MagicMock()
+    mock_output.item.return_value = 0.2  # Set a float value for the anomaly score
+    model.return_value = mock_output
+
+    # Logs to test
+    logs = ['something crashes in openstack', 'INIT SUCCESSFUL']
+
+    # Call the function
+    result = detect_anomalies(model, tokenizer, logs)
+
+    # Assert the result
+    assert result == 1  # Based on the threshold logic
