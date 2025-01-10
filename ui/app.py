@@ -64,8 +64,8 @@ def rca_hf(logs):
         return f"Anomalies: {anomalies}\nRoot Causes: {root_causes}"
     return "Error: Unable to connect to the RCA service."
     """
-def ad_bert(logs):
-    print("Sending to API:", {"logs": logs})
+def ad_bert():
+    #print("Sending to API:", {"logs": logs})
     response = adbert()
     return response
 
@@ -95,29 +95,7 @@ with gr.Blocks() as demo:
 
 # Define the Gradio interface
 interface = gr.TabbedInterface(
-    [
-        gr.Interface(
-            fn=predict,
-            inputs=gr.Textbox(lines=5, placeholder="Enter log text here..."),
-            outputs="text",
-            title="Log Anomaly Detection",
-            description="Detect anomalies in logs using LogBERT.",
-        ),
-        gr.Interface(
-            fn=root_cause_analysis,
-            inputs=gr.Textbox(lines=10, placeholder="Enter multiple log entries, one per line...", label="Logs"),
-            outputs="text",
-            title="Root Cause Analysis",
-            description="Perform RCA for logs and detected anomalies.",
-        ),
-       gr.Interface(
-            fn=root_cause_generation,
-            inputs=gr.Textbox(lines=10, placeholder="Paste logs here..."),
-            outputs="text",
-            title="Issue Explainer",
-            description="Detect anomalies in logs and explain root causes."
-        ), 
-
+        [
         gr.Interface(
             fn=ad_bert,
             #inputs=gr.Textbox(lines=1, placeholder="Paste logs here..."),
@@ -129,7 +107,7 @@ interface = gr.TabbedInterface(
 
         gr.Interface(
             fn=rca_hf,
-            inputs=gr.Textbox(lines=1, placeholder="Paste logs here..."),
+            inputs=gr.Textbox(lines=10, placeholder="Paste logs here..."),
             outputs="text",
             title="Root Cause Analysis with Hugging face model",
             description="Root cause analysis."
@@ -137,7 +115,7 @@ interface = gr.TabbedInterface(
 
         gr.Interface(
             fn=rca_openai,
-            inputs=gr.Textbox(lines=1, placeholder="Paste logs here..."),
+            inputs=gr.Textbox(lines=10, placeholder="Paste logs here..."),
             outputs="text",
             title="Root Cause Analysis with OpenAI model",
             description="Root cause analysis."
@@ -147,7 +125,8 @@ interface = gr.TabbedInterface(
 
 
     ],
-    tab_names=["Anomaly Detection", "Root Cause Analysis",  "Issue Explainer", "Anamoly detect", "Root Cause Analysis with HF", "Root cause analysis with Open AI"]
+    #tab_names=["Anomaly Detection", "Root Cause Analysis",  "Issue Explainer", "Anamoly detect", "Root Cause Analysis with HF", "Root cause analysis with Open AI"]
+    tab_names=["Anamoly detect", "Root Cause Analysis with HF", "Root cause analysis with Open AI"]
 )
 if __name__ == "__main__":
     #interface.launch(share=True)
