@@ -112,34 +112,73 @@ Install dependencies:
 
 # Code structure
 ```
-├── src/
-│   ├── __init__.py
-│   ├── data_preprocessing.py
-│   ├── model.py
-│   ├── anomaly_detection.py
-│   ├── root_cause_analysis.py
-│   ├── guardrails.py
-│   └── utils.py
-│
-├── notebooks/
-│   └── model_exploration.ipynb
-│
-├── tests/
-│   ├── __init__.py
-│   ├── test_preprocessing.py
-│   ├── test_model.py
-│   └── test_anomaly_detection.py
-│
-├── docker/
+
+.
+├── CODEOWNERS
+├── Dockerfile -> docker/Dockerfile
+├── Project Status.xlsx
+├── README.md
+├── build_and_test_docker.sh
+├── ci_cd
+│   ├── deployment_script.sh
+│   └── github_workflow.yml
+├── config.yaml
+├── data
+│   ├── OpenStack_2k.log
+│   ├── OpenStack_2k.log_structured.csv
+│   ├── OpenStack_2k.log_templates.csv
+│   └── context_kb.pdf
+├── docker
 │   ├── Dockerfile
 │   └── docker-compose.yml
-│
-├── ci_cd/
-│   ├── github_workflow.yml
-│   └── deployment_script.sh
-│
+├── docker-compose.yml -> docker/docker-compose.yml
+├── notebooks
+│   ├── ClearML.ipynb
+│   ├── LangGraphLearning.ipynb
+│   ├── RAG_OPENAI_ver2.ipynb
+│   ├── RCA_Huggingface.ipynb
+│   ├── RCA_OPENAILLM.ipynb
+│   ├── bert_ver2.ipynb
+│   ├── context_kb.docx
+│   ├── context_kb.pdf
+│   ├── deeplog.ipynb
+│   └── model_exploration.ipynb
 ├── requirements.txt
-├── README.md
+├── run.sh
+├── service_startup.log
 ├── setup.py
-└── config.yaml
+├── setup_venv.sh
+├── src
+│   ├── __init__.py
+│   ├── anomaly_detection.py
+│   ├── data_preprocessing.py
+│   ├── data_processing
+│   │   └── log.txt
+│   ├── export.py
+│   ├── guardrails.py
+│   ├── logbert_pretrained.py
+│   ├── model.py
+│   ├── model_architecture
+│   │   ├── __init__.py
+│   │   └── log_anomaly_detector.py
+│   ├── model_files
+│   │   └── LogAnomalyDetector
+│   │       ├── model.pth
+│   │       ├── special_tokens_map.json
+│   │       ├── tokenizer_config.json
+│   │       └── vocab.txt
+│   ├── rca_huggingface.py
+│   ├── rca_openai.py
+│   ├── root_cause_analysis.py
+│   └── utils.py
+├── tests
+│   ├── __init__.py
+│   ├── test_anomaly_detection.py
+│   ├── test_model.py
+│   ├── test_preprocessing.py
+│   └── test_root_cause_analysis.py
+└── ui
+    ├── api.py
+    └── app.py
+
 ```
